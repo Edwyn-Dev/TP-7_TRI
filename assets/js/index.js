@@ -1,76 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Declare necessary variables
-    let trashItems = [];
-    let assignedTrashItems = {};
-    const trashItemsContainer = document.getElementById('trash-items-container');
-    const resultsContainer = document.getElementById('results');
-    const gameContainer = document.getElementById('game-container');
-    const resultsSection = document.getElementById('results-container');
+    // Déclare les variables nécessaires
+    let trashItems = []; // Tableau pour stocker les objets de déchets
+    let assignedTrashItems = {}; // Objet pour stocker les associations entre les déchets et les bacs
+    const trashItemsContainer = document.getElementById('trash-items-container'); // Conteneur pour les éléments de déchets
+    const resultsContainer = document.getElementById('results'); // Conteneur pour afficher les résultats
+    const gameContainer = document.getElementById('game-container'); // Conteneur du jeu
+    const resultsSection = document.getElementById('results-container'); // Section des résultats
 
-    // Load trash items from the JSON file
+    // Charge les objets de déchets depuis un fichier JSON
     fetch('assets/json/dechets.json')
         .then(response => response.json())
         .then(data => {
-            trashItems = data;
-            startGame();
+            trashItems = data; // Assigne les données chargées à la variable trashItems
+            startGame(); // Démarre le jeu
         });
 
-    // Function to start the game
+    // Fonction pour démarrer le jeu
     function startGame() {
-        // Shuffle and select 10 trash items
+        // Mélange et sélectionne 10 objets de déchets au hasard
         trashItems = trashItems.sort(() => 0.5 - Math.random()).slice(0, 10);
-        trashItemsContainer.innerHTML = '';
-        assignedTrashItems = {};
+        trashItemsContainer.innerHTML = ''; // Vide le conteneur des objets de déchets
+        assignedTrashItems = {}; // Réinitialise les associations
         trashItems.forEach(trash => {
-            // Create trash item elements and set their properties
+            // Crée les éléments de déchets et définit leurs propriétés
             const trashElement = document.createElement('div');
             trashElement.className = 'trash-item';
             trashElement.dataset.name = trash.nom;
             trashElement.innerHTML = `<i class="fas"><img src="assets/icon/${trash.icone}.png" class="icon" draggable="false"><hr><span class="trash-name">${trash.nom}</span></i>`;
-            trashElement.draggable = true;
-            trashElement.ondragstart = dragStart;
-            trashItemsContainer.appendChild(trashElement);
+            trashElement.draggable = true; // Rend l'élément draggable
+            trashElement.ondragstart = dragStart; // Définit l'événement ondragstart
+            trashItemsContainer.appendChild(trashElement); // Ajoute l'élément au conteneur
         });
 
-        // Set up drag & drop events for the bins
+        // Configure les événements de glisser-déposer pour les bacs
         document.querySelectorAll('.bin').forEach(bin => {
-            bin.ondragover = dragOver;
-            bin.ondrop = drop;
+            bin.ondragover = dragOver; // Définit l'événement ondragover
+            bin.ondrop = drop; // Définit l'événement ondrop
         });
 
-        // Set up button click events
-        document.getElementById('verify').onclick = verifyResults;
-        document.getElementById('restart').onclick = () => location.reload();
-        document.getElementById('return').onclick = returnToGame;
+        // Configure les événements de clic des boutons
+        document.getElementById('verify').onclick = verifyResults; // Vérifie les résultats
+        document.getElementById('restart').onclick = () => location.reload(); // Redémarre le jeu
+        document.getElementById('return').onclick = returnToGame; // Retourne au jeu
     }
 
-    // Function triggered when dragging starts
+    // Fonction déclenchée lorsque le glisser commence
     function dragStart(event) {
-        event.dataTransfer.setData('text/plain', event.target.dataset.name);
-        setTimeout(() => event.target.style.visibility = 'hidden', 0);
+        event.dataTransfer.setData('text/plain', event.target.dataset.name); // Stocke le nom de l'objet glissé
+        setTimeout(() => event.target.style.visibility = 'hidden', 0); // Rend l'objet invisible temporairement
     }
 
-    // Function to allow the drop
+    // Fonction pour permettre le dépôt
     function dragOver(event) {
-        event.preventDefault();
+        event.preventDefault(); // Empêche le comportement par défaut pour permettre le dépôt
     }
 
-    // Function to handle the drop of an item into a bin
+    // Fonction pour gérer le dépôt d'un élément dans un bac
     function drop(event) {
         event.preventDefault();
-        const trashName = event.dataTransfer.getData('text/plain');
-        assignedTrashItems[trashName] = event.target.dataset.type;
+        const trashName = event.dataTransfer.getData('text/plain'); // Récupère le nom de l'objet déposé
+        assignedTrashItems[trashName] = event.target.dataset.type; // Associe l'objet au type de bac
 
         const trashElement = Array.from(document.querySelectorAll('.trash-item')).find(el => el.dataset.name === trashName);
         if (trashElement) {
-            trashElement.style.visibility = 'visible';
-            trashElement.style.display = 'none';
+            trashElement.style.visibility = 'visible'; // Rend l'objet visible
+            trashElement.style.display = 'none'; // Cache l'objet de la vue
         }
     }
 
-    // Function to verify the results
+    // Fonction pour vérifier les résultats
     function verifyResults() {
-        resultsContainer.innerHTML = '';
+        resultsContainer.innerHTML = ''; // Vide le conteneur des résultats
         let score = 0;
         trashItems.forEach(trash => {
             const result = document.createElement('div');
@@ -89,14 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreElement.innerHTML = `<strong>Score: ${score}/10</strong>`;
         resultsContainer.appendChild(scoreElement);
 
-        gameContainer.classList.add('hidden');
-        resultsSection.classList.remove('hidden');
+        gameContainer.classList.add('hidden'); // Cache le conteneur du jeu
+        resultsSection.classList.remove('hidden'); // Affiche la section des résultats
     }
 
-    // Function to return to the game and restart
+    // Fonction pour retourner au jeu et redémarrer
     function returnToGame() {
-        gameContainer.classList.remove('hidden');
-        resultsSection.classList.add('hidden');
-        startGame();
+        gameContainer.classList.remove('hidden'); // Affiche le conteneur du jeu
+        resultsSection.classList.add('hidden'); // Cache la section des résultats
+        startGame(); // Redémarre le jeu
     }
 });
