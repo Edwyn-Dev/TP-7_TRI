@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Tri Sélectif</title>
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script defer src="assets/js/index.js"></script>
+</head>
+
+<body>
+    <div id="game">
+        <header>
+            <h1>Jeu de Tri Sélectif</h1>
+        </header>
+        <main id="game-container">
+            <div id="trash-items-container" class="container"></div>
+            <div id="bins-container" class="container">
+                <div class="bin" data-type="jaune">
+                    <i class="fas fa-recycle"></i>
+                    <span>Jaune</span>
+                </div>
+                <div class="bin" data-type="verte">
+                    <i class="fas fa-recycle"></i>
+                    <span>Verte</span>
+                </div>
+                <div class="bin" data-type="bleue">
+                    <i class="fas fa-recycle"></i>
+                    <span>Bleue</span>
+                </div>
+                <div class="bin" data-type="marron">
+                    <i class="fas fa-recycle"></i>
+                    <span>Marron</span>
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="verify">Vérifier</button>
+                <button id="restart">Redémarrer</button>
+            </div>
+        </main>
+        <section id="results-container" class="hidden">
+            <h2>Résultats</h2>
+            <div id="results"></div>
+            <button id="return">Retour au jeu</button>
+        </section>
+    </div>
+</body>
+
+</html>

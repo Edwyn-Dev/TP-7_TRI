@@ -1,0 +1,12 @@
+[
+    {"nom": "Bouteille en plastique", "type": "jaune", "icone": "water-bottle"},
+    {"nom": "Canette en aluminium", "type": "jaune", "icone": "can"},
+    {"nom": "Bouteille en verre", "type": "verte", "icone": "glass-bottle"},
+    {"nom": "Journal", "type": "bleue", "icone": "journal"},
+    {"nom": "Déchet alimentaire", "type": "marron", "icone": "stink"},
+    {"nom": "Boîte en carton", "type": "jaune", "icone": "carton"},
+    {"nom": "Verre cassé", "type": "verte", "icone": "window"},
+    {"nom": "Magazine", "type": "bleue", "icone": "magazine"},
+    {"nom": "Déchet alimentaire", "type": "marron", "icone": "stink"},
+    {"nom": "Bouteille en plastique", "type": "jaune", "icone": "water-bottle"}
+]
